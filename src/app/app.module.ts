@@ -3,12 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from '../routes/app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './components/core/home/home.component';
+import { SigninComponent } from './components/auth/signin/signin.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { HeaderComponent } from './components/core/header/header.component';
+import { UserPanelComponent } from './components/user-panel/user-panel.component';
+import { GuestListComponent } from './components/user-tools/guest-list/guest-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    SigninComponent,
+    RegisterComponent,
+    HeaderComponent,
+    UserPanelComponent,
+    GuestListComponent
   ],
   imports: [
     BrowserModule,
