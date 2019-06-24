@@ -1,14 +1,14 @@
 <div class="container">
     <div class="row">
         <div class="col-12 col-md-5 col-md-offset-2">
-            <form>
+            <form (ngSubmit)="onSignIn(f)" #f="ngForm">
                 <div class="form-group">
                     <label for="email">E-Mail</label>
-                    <input type="email" name="email" id="email-signin" class="form-control">
+                    <input type="email" name="email" id="email-signin" class="form-control" ngModel>
                 </div>
                 <div class="form-group">
                     <label for="password-signin">Password</label>
-                    <input type="password" name="password" id="password-signin" class="form-control">
+                    <input type="password" name="password" id="password-signin" class="form-control" ngModel>
                 </div>
                 <button type="submit" class="btn btn-primary">Sign In</button>
             </form>

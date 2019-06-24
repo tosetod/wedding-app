@@ -1,26 +1,49 @@
-<div class="container">
+<div class="alert alert-info " role="alert" *ngIf="authService.emailSent">
+    Verification e-mail was sent to your e-mail address! 
+    <br>
+    <a [routerLink]="[ '/signin' ]" class="alert-link">
+      Click here to sign in, after you verify your e-mail
+    </a>
+</div>
+<div class="container" *ngIf="!authService.emailSent">
     <div class="row">
         <div class="col-12 col-md-5 col-md-offset-2">
-          <form>
+          <form (ngSubmit)="onRegister(f)" #f="ngForm">
             <div class="form-group">
               <label for="first-name">First Name</label>
-              <input type="text" name="first-name" id="first-name" class="form-control">
+              <input type="text" name="firstName" id="first-name" class="form-control" ngModel>
             </div>
             <div class="form-group">
               <label for="last-name">Last Name</label>
-              <input type="text" name="last-name" id="last-name" class="form-control">
+              <input type="text" name="lastName" id="last-name" class="form-control" ngModel>
+            </div>
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input type="number" name="age" id="age" class="form-control" ngModel>
+            </div>
+            <div class="form-group">
+              <label for="partner-name">Partner's Name</label>
+              <input type="text" name="partnerName" id="partner-name" class="form-control" ngModel>
+            </div>
+            <div class="form-group">
+              <label for="partner-age">Partner's Age</label>
+              <input type="number" name="partnerAge" id="partner-age" class="form-control" ngModel>
+            </div>
+            <div class="form-group">
+              <label for="wed-date">Wedding Date</label>
+              <input type="date" name="wedDate" id="wed-date" class="form-control" ngModel>
             </div>
             <div class="form-group">
               <label for="email">E-Mail</label>
-              <input type="email" name="email" id="email" class="form-control">
+              <input type="email" name="email" id="email" class="form-control" ngModel>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" name="password" id="password" class="form-control">
+              <input type="password" name="password" id="password" class="form-control" ngModel>
             </div>
             <div class="form-group">
               <label for="confirm-password">Confirm Password</label>
-              <input type="password" name="confirm-password" id="confirm-password" class="form-control">
+              <input type="password" name="confirmPassword" id="confirm-password" class="form-control" ngModel>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
           </form>

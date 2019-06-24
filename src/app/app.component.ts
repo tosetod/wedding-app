@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'WeddingApp';
+
+  ngOnInit(){
+    firebase.initializeApp({
+      apiKey: "AIzaSyCo35gzxQSY5125A0VKN_UMIzfMqiBD-No",
+      authDomain: "wedding-app-79194.firebaseapp.com"
+    }); 
+  }
 }

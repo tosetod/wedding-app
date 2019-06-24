@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule  } from "@angular/common/http";
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../routes/app-routing.module';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/core/home/home.component';
 import { SigninComponent } from './components/auth/signin/signin.component';
@@ -18,11 +20,14 @@ import { GuestListComponent } from './components/user-tools/guest-list/guest-lis
     RegisterComponent,
     HeaderComponent,
     UserPanelComponent,
-    GuestListComponent
+    GuestListComponent,
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
