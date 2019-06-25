@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +9,26 @@ export class AuthService {
   token: string;
   errMessage: string;
   emailSent: boolean;
-
   constructor(private router: Router){  }
 
-  registerUser(email: string, password: string){
+  registerUser(email: string, password: string): boolean{
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(res => {
         res.user.sendEmailVerification()
-        .then(res => {
-          if (res == undefined) {
+        .then(() => {
             this.emailSent = true;
-          }
+            return true;
           //this.router.navigate(['']);
         })
         .catch(err => {
-          console.log(err)
+          console.log(err);
         });
       })
       .catch(err => {
         this.errMessage = err.message
+        return false;
       });
+      return true;
   }
   
   signinUser(email: string, password: string){
@@ -45,6 +45,7 @@ export class AuthService {
         })
       .catch(error => console.log(error));
   }
+
 
   logout(){
     firebase.auth().signOut();

@@ -1,0 +1,20 @@
+export class User {
+    public id: string;
+    public firstName: string;
+    public lastName?: string;
+    public email: string;
+    public age?: number
+    public wedDate?: Date;
+    public partnerName?: string;
+    public partnerAge?: number;
+
+    constructor (email: string, name: string, surname: string = '', age: number = null, date: Date = null, partName: string = '', partAge: number = null) {
+        this.email = email;
+        this.firstName = name;
+        this.lastName = surname;
+        this.age = age;
+        this.wedDate = date;
+        this.partnerName = partName;
+        this.partnerAge = partAge;
+    }
+}
