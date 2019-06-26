@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GuestListService } from 'src/app/services/data-layer/guest-list.service';
-import { Guest } from 'src/app/models/guest.model';
+import { map } from 'rxjs/operators'
+import { Observable } from 'rxjs';
+
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-guest-list',
@@ -8,25 +11,43 @@ import { Guest } from 'src/app/models/guest.model';
   styleUrls: ['./guest-list.component.css']
 })
 export class GuestListComponent implements OnInit {
-  
-  public guests: Guest[];
+  guests: Observable<any[]>;
 
-  constructor(private guestService: GuestListService) { }
+  constructor(private guestService: GuestListService, private firestore: AngularFirestore) { }
 
   ngOnInit() {
-    this.guests = this.guestService.guests.subscribe(n => n.);
+    this.guests = this.guestService.getGuestsValueChanges();
+    this.guests = this.guestService.getGuestsData().pipe(map(guests => {
+      guests.sort((a, b) => {
+        return a.name < b.name ? -1 : 1;
+      });
+      return guests;
+    }));
   }
-
 
   onAddGuest(name){
     const guest = {
       name: name.value
     }
-    this.guestService.createGuest(guest);
-    console.log('guest ' + guest.name + ' created');
     name.value = '';
+    if (guest.name !== '') {
+      this.guestService.createGuest(guest)
+      .then(res => {
+        console.log(res);
+      })
+    }
     
-    console.log(this.guests);
+      
+  }
+
+  onPlusOne(plusGuest){
+    const guest = {
+      name: `${plusGuest.name}'s plus one` 
+    }
+    this.guestService.createGuest(guest)
+    .then(res => {
+      console.log(res);
+    })
   }
 
 }

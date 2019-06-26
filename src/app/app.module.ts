@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule  } from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../routes/app-routing.module';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { environment } from "src/environments/environment";
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/core/home/home.component';
@@ -20,14 +23,15 @@ import { GuestListComponent } from './components/user-tools/guest-list/guest-lis
     RegisterComponent,
     HeaderComponent,
     UserPanelComponent,
-    GuestListComponent,
-    
+    GuestListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

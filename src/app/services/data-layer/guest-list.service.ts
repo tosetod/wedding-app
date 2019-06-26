@@ -1,41 +1,44 @@
 import { Injectable } from '@angular/core';
-import * as firebase from 'firebase';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Guest } from 'src/app/models/guest.model';
-import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators'
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class GuestListService {
-  private _db = firebase.firestore();
-  private _guests: BehaviorSubject<Guest[]>; 
-  
-  constructor() {
-    this._guests = <BehaviorSubject<Guest[]>>new BehaviorSubject([]);
-   }
+
+  guestsChanged = [];
+
+  constructor(private firestore: AngularFirestore) { 
+  }
 
   createGuest(guest: { name: string}){
-    this._db.collection('guests').add(guest);
+    return new Promise<any>((resolve, reject) => {
+      this.firestore
+        .collection('guests')
+        .add(guest)
+        .then(res => {}, err => reject(err));
+    })
   }
 
-  get guests(){
-      return this._guests.asObservable();
+  getGuestsData(){
+    return this.firestore.collection('guests').snapshotChanges().pipe(map(
+      actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Guest;
+          const id = a.payload.doc.id;
+          return { id, ...data};
+        })
+      }
+    ));
   }
 
-  getAll() {
-      let guests = [];
-      this._db.collection('guests').get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          console.log(doc.id, '=>', doc.data({ serverTimestamps: 'estimate' }));
-          guests.push(doc.data({ serverTimestamps: 'estimate' }));
-        });
-      })
-      .catch(err => {
-        console.log('Error getting documents', err);
-      });
-      this._guests.next(Object.assign({}, guests));
+  getGuestsValueChanges(){
+    return this.firestore
+            .collection('guests').valueChanges();
+            
   }
-  
   
 }

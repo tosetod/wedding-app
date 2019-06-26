@@ -10,9 +10,22 @@
   </div>
   <div class="row">
     <div class="col-6">
-      <ol class="list-group" >
-        <li class="list-group-item" *ngFor="let guest of guests">{{ guest.name }}</li>
-      </ol>
+      <ul class="list-group" >
+        <div *ngFor="let guest of guests | async; let i = index">
+          <li class="list-group-item">
+            {{ i+1 }}. {{ guest.name | titlecase }} 
+            <button type="button" 
+              class="btn btn-sm btn-outline-success float-right" 
+              (click)="onPlusOne(guest)"
+              >
+              +1
+            </button>
+          </li>
+        </div>
+        <div class="col-6">
+          <!-- <mat-checkbox [(ngModel)]="${property.checkedOrUnchecked}">Confirmed</mat-checkbox> -->
+        </div>
+      </ul>
     </div>
   </div>
 </div>
