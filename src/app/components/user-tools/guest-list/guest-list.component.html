@@ -2,7 +2,6 @@
   <div class="row">
     <div class="col-6">
       <input type="text" name="guestName" id="guest-name" class="form-control" #name (keydown.enter)="onAddGuest(name)">
-      
     </div>
     <div class="col-6">
       <button class="btn btn-primary" type="submit" (click)="onAddGuest(name)">Add Guest</button>
@@ -22,10 +21,16 @@
             </button>
           </li>
         </div>
-        <div class="col-6">
-          <!-- <mat-checkbox [(ngModel)]="${property.checkedOrUnchecked}">Confirmed</mat-checkbox> -->
-        </div>
       </ul>
     </div>
+    <div class="col-2">
+      <button type="button" class="btn btn-primary">Invite</button>
+        <div class="btn-group" data-toggle="buttons"  *ngFor="let guest of guests | async;">
+          <button type="button" class="btn btn-primary guest-list-button" (click)="onInvite(guest)">Invite</button>
+          <button type="button" class="btn btn-success guest-list-button" (click)="onConfirm(guest)">Confirm</button>
+          <button type="button" class="btn btn-danger guest-list-button" (click)="onDelete(guest)">Delete</button>
+        </div>
+    </div>
   </div>
+  
 </div>

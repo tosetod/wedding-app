@@ -12,6 +12,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class GuestListComponent implements OnInit {
   guests: Observable<any[]>;
+  isInvited: boolean;
 
   constructor(private guestService: GuestListService, private firestore: AngularFirestore) { }
 
@@ -50,4 +51,12 @@ export class GuestListComponent implements OnInit {
     })
   }
 
+  onInvite(guest){
+    this.isInvited = !this.isInvited;
+    console.log(guest);
+  }
+
+  
+
+  
 }
