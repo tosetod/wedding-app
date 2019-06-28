@@ -13,7 +13,12 @@
         <div class="row mb-2">
           <div class="col-md-6 guest">
             {{ i+1 }}. {{ guest.name | titlecase }}
-            <button type="button" class="btn btn-sm btn-outline-success float-right" (click)="onPlusOne(guest)" *ngIf="!guest.name.endsWith('one')">
+            <button type="button" 
+              class="btn btn-sm btn-outline-success float-right" 
+              (click)="onPlusOne(guest)" 
+              *ngIf="!guest.name.endsWith('one')"
+              [disabled]="clicked"
+              >
               +1
             </button>
           </div>
