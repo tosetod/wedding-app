@@ -38,7 +38,6 @@ export class GuestListService {
   getGuestsValueChanges(){
     return this.firestore
             .collection('guests').valueChanges();
-            
   }
   
 }

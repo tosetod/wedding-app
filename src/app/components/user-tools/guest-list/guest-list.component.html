@@ -1,36 +1,32 @@
 <div class="container">
   <div class="row">
-    <div class="col-6">
+    <div class="offset-md-3 col-md-4 mb-5 mt-3">
       <input type="text" name="guestName" id="guest-name" class="form-control" #name (keydown.enter)="onAddGuest(name)">
     </div>
-    <div class="col-6">
+    <div class="col-md-3 mt-3 mb-5">
       <button class="btn btn-primary" type="submit" (click)="onAddGuest(name)">Add Guest</button>
     </div>
   </div>
-  <div class="row">
-    <div class="col-6">
-      <ul class="list-group" >
-        <div *ngFor="let guest of guests | async; let i = index">
-          <li class="list-group-item">
-            {{ i+1 }}. {{ guest.name | titlecase }} 
-            <button type="button" 
-              class="btn btn-sm btn-outline-success float-right" 
-              (click)="onPlusOne(guest)"
-              >
+  <div class="row d-flex ">
+    <div class="offset-md-2 col-md-10 justify-content-center">
+      <div *ngFor="let guest of guests | async; let i = index">
+        <div class="row mb-2">
+          <div class="col-md-6 guest">
+            {{ i+1 }}. {{ guest.name | titlecase }}
+            <button type="button" class="btn btn-sm btn-outline-success float-right" (click)="onPlusOne(guest)" *ngIf="!guest.name.endsWith('one')">
               +1
             </button>
-          </li>
+          </div>
+          <div class="col-md-6">
+            <div class="btn-group" data-toggle="buttons">
+              <button type="button" class="btn btn-primary guest-list-button mr-1" (click)="onInvite(guest)">Invite</button>
+              <button type="button" class="btn btn-success guest-list-button mr-1" (click)="onConfirm(guest)">Confirm</button>
+              <button type="button" class="btn btn-danger guest-list-button" (click)="onDelete(guest)">Remove</button>
+            </div>
+          </div>
         </div>
-      </ul>
-    </div>
-    <div class="col-2">
-      <button type="button" class="btn btn-primary">Invite</button>
-        <div class="btn-group" data-toggle="buttons"  *ngFor="let guest of guests | async;">
-          <button type="button" class="btn btn-primary guest-list-button" (click)="onInvite(guest)">Invite</button>
-          <button type="button" class="btn btn-success guest-list-button" (click)="onConfirm(guest)">Confirm</button>
-          <button type="button" class="btn btn-danger guest-list-button" (click)="onDelete(guest)">Delete</button>
-        </div>
+      </div>
     </div>
   </div>
-  
+
 </div>

@@ -3,8 +3,6 @@ import { GuestListService } from 'src/app/services/data-layer/guest-list.service
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs';
 
-import { AngularFirestore } from '@angular/fire/firestore';
-
 @Component({
   selector: 'app-guest-list',
   templateUrl: './guest-list.component.html',
@@ -14,13 +12,13 @@ export class GuestListComponent implements OnInit {
   guests: Observable<any[]>;
   isInvited: boolean;
 
-  constructor(private guestService: GuestListService, private firestore: AngularFirestore) { }
+  constructor(private guestService: GuestListService) { }
 
   ngOnInit() {
     this.guests = this.guestService.getGuestsValueChanges();
     this.guests = this.guestService.getGuestsData().pipe(map(guests => {
       guests.sort((a, b) => {
-        return a.name < b.name ? -1 : 1;
+        return a.name.localeCompare(b.name);//a.name < b.name ? -1 : 1;
       });
       return guests;
     }));
@@ -53,6 +51,14 @@ export class GuestListComponent implements OnInit {
 
   onInvite(guest){
     this.isInvited = !this.isInvited;
+    console.log(guest);
+  }
+
+  onConfirm(guest){
+    console.log(guest);
+  }
+
+  onDelete(guest){
     console.log(guest);
   }
 
