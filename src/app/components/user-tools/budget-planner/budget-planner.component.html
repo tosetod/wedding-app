@@ -14,38 +14,38 @@
       <tbody>
           <tr>
             <td scope="row"></td>
-            <td><input type="text" #type></td>
-            <td><input type="number" #amount></td>
-            <td><input type="number" #budget></td>
+            <td><input type="text" #type placeholder="Dress"></td>
+            <td><input type="number" #amount placeholder="600"></td>
+            <td><input type="number" #budget placeholder="800"></td>
+            <td>+{{ '200' | currency:'EUR':'symbol':'2.2-2':'de' }}</td>
             <td><button type="button" class="btn btn-primary" (click)="onAdd(type, amount, budget)">Add</button></td>
-            <td></td>
           </tr>
         <tr *ngFor="let item of items | async; let i=index">
           <td scope="row">{{ i+1 }}.</td>
           <td>
             <span *ngIf="!item.editMode" (click)="onEdit(item)" data-container="body" data-toggle="popover" data-placement="top" data-content="stillInEditMode">{{ item.type | titlecase }}</span>
-            <input type="text" *ngIf="item.editMode" [value]="item.type" #editType>
+            <input type="text" *ngIf="item.editMode"[(ngModel)]="item.type">
           </td>
           <td>
-            <span *ngIf="!item.editMode" (click)="onEdit(item)">{{ item.amount }}</span>
-            <input type="number" *ngIf="item.editMode" [value]="item.amount" #editAmount>
+            <span *ngIf="!item.editMode" (click)="onEdit(item)">{{ item.amount | currency:'EUR':'symbol':'2.2-2':'de' }}</span>
+            <input type="number" *ngIf="item.editMode" [(ngModel)]="item.amount">
           </td>
           <td>
-            <span *ngIf="!item.editMode" (click)="onEdit(item)">{{ item.budget }}</span>
-            <input type="number" *ngIf="item.editMode" [value]="item.budget" #editBudget>
+            <span *ngIf="!item.editMode" (click)="onEdit(item)">{{ item.budget | currency:'EUR':'symbol':'2.2-2':'de' }}</span>
+            <input type="number" *ngIf="item.editMode"[(ngModel)]="item.budget">
           </td>
-          <td>{{ item.overUnder }}</td>
+          <td>{{ item.overUnder > 0 ? '+' : '' }}{{ item.overUnder | currency:'EUR':'symbol':'2.2-2':'de' }}</td>
           <td>
             <button type="button" class="btn btn-danger btn-sm" (click)="onRemove(item)" *ngIf="!item.editMode">Remove</button>
-            <button type="button" class="btn btn-danger btn-sm" (click)="onSave(editType.value, editAmount.value, editBudget.value, item)" *ngIf="item.editMode">Save</button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="onSave(item)" *ngIf="item.editMode">Save</button>
           </td>
         </tr>
         <tr>
           <td scope="row">--</td>
           <td scope="row">Total:</td>
-          <td>{{ totalAmount }}</td>
-          <td>{{ totalBudget }}</td>
-          <td>{{ totalOverUnder }}</td>
+          <td>{{ totalAmount | currency:'EUR':'symbol':'2.2-2':'de' }}</td>
+          <td>{{ totalBudget | currency:'EUR':'symbol':'2.2-2':'de' }}</td>
+          <td>{{ totalOverUnder > 0 ? '+' : '' }}{{ totalOverUnder | currency:'EUR':'symbol':'2.2-2':'de'}}</td>
           <td></td>
         </tr>
       </tbody>

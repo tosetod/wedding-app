@@ -64,4 +64,11 @@ export class BudgetPlannerService {
         .then(res => {}, err => rej(err));
     })
   }
+
+  deleteItem(item: BudgetItem){
+    return new Promise<any>((res, rej) => {
+      this.firestore.collection('budget').doc(item.id).delete()
+        .then(res => {}, err => rej(err));
+    })
+  }
 }

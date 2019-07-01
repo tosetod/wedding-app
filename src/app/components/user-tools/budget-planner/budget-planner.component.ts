@@ -17,6 +17,7 @@ export class BudgetPlannerComponent implements OnInit {
   totalOverUnder: number = 0;
   editMode = false;
   stillInEditMode = '';
+  editT = '';
 
   constructor(private budgetService:BudgetPlannerService) { }
   
@@ -37,17 +38,24 @@ export class BudgetPlannerComponent implements OnInit {
 
 
   onAdd(type, amount, budget){
-    const newItem = {
-      type: type.value,
-      amount: parseInt(amount.value),
-      budget: parseInt(budget.value),
-      overUnder: budget.value - amount.value,
-      editMode: false
+    if (type.value !== '' && amount.value !== '' && budget.value !== '') {
+      const newItem = {
+        type: type.value,
+        amount: parseInt(amount.value),
+        budget: parseInt(budget.value),
+        overUnder: budget.value - amount.value,
+        editMode: false
+      }
+      if (newItem.type !== '' && newItem.amount !== NaN && newItem.budget !== NaN) {
+        this.budgetService.createItem(newItem);
+        type.value = '';
+        amount.value = '';
+        budget.value = '';
+      }
     }
-    type.value = '';
-    amount.value = '';
-    budget.value = '';
-    this.budgetService.createItem(newItem);
+    
+    
+    
   }
 
   onEdit(item){
@@ -59,18 +67,21 @@ export class BudgetPlannerComponent implements OnInit {
     }
   }
 
-  onSave(type, amount, budget, item){
-    console.log(amount)
+  onSave(item){
     const editedItem = {
       id: item.id,
-      type: type.value,
-      amount: amount.value,
-      budget: parseInt(budget.value),
-      overUnder: amount.value - budget.value,
+      type: item.type,
+      amount: parseInt(item.amount),
+      budget: parseInt(item.budget),
+      overUnder: item.amount - item.budget,
       editMode: false
     }
     this.budgetService.updateItem(editedItem);
     this.editMode = false;
+  }
+
+  onRemove(item){
+    this.budgetService.deleteItem(item);
   }
 
 }
