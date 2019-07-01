@@ -14,6 +14,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { HeaderComponent } from './components/core/header/header.component';
 import { UserPanelComponent } from './components/user-panel/user-panel.component';
 import { GuestListComponent } from './components/user-tools/guest-list/guest-list.component';
+import { BudgetPlannerComponent } from './components/user-tools/budget-planner/budget-planner.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { GuestListComponent } from './components/user-tools/guest-list/guest-lis
     RegisterComponent,
     HeaderComponent,
     UserPanelComponent,
-    GuestListComponent
+    GuestListComponent,
+    BudgetPlannerComponent
   ],
   imports: [
     BrowserModule,

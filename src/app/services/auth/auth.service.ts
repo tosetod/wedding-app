@@ -9,6 +9,7 @@ export class AuthService {
   token: string;
   errMessage: string;
   emailSent: boolean;
+
   constructor(private router: Router){  }
 
   registerUser(email: string, password: string): boolean{

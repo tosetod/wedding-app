@@ -3,3 +3,9 @@
     border-radius: 5px;
     padding-top: 3px;
 }
+
+#plus-one{
+    border: 1px solid rgb(212, 97, 69);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}

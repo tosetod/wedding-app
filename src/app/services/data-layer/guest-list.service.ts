@@ -14,11 +14,19 @@ export class GuestListService {
   constructor(private firestore: AngularFirestore) { 
   }
 
-  createGuest(guest: { name: string}){
+  createGuest(guest: Guest){
+    const newGuest = {
+      name: guest.name,
+      isInvited: false,
+      confirmed: false,
+      plusOne: {
+        name: ''
+      }
+    }
     return new Promise<any>((resolve, reject) => {
       this.firestore
         .collection('guests')
-        .add(guest)
+        .add(newGuest)
         .then(res => {}, err => reject(err));
     })
   }
@@ -39,5 +47,42 @@ export class GuestListService {
     return this.firestore
             .collection('guests').valueChanges();
   }
+
+  deleteGuest(guest: Guest){
+    return new Promise<any>((res, rej) => {
+      this.firestore.collection('guests').doc(guest.id).delete()
+        .then(res => {}, err => rej(err));
+    })
+  }
+
+  guestPlusOne(guest: Guest){
+    return new Promise<any>((res, rej) => {
+      this.firestore.collection('guests').doc(guest.id).update({'plusOne.name': guest.name + "'s plus one"})
+        .then(res => {}, err => rej(err));
+    })
+  }
+
+  confirmGuest(guest: Guest){
+    return new Promise<any>((res, rej) => {
+      this.firestore.collection('guests').doc(guest.id).update({'confirmed': true})
+        .then(res => {}, err => rej(err));
+    })
+  }
+
+  inviteGuest(guest:Guest){
+    return new Promise<any>((res, rej) => {
+      this.firestore.collection('guests').doc(guest.id).update({'isInvited': true})
+        .then(res => {}, err => rej(err));
+    })
+  }
+
+  removePlusOne(guest: Guest){
+    return new Promise<any>((res, rej) => {
+      this.firestore.collection('guests').doc(guest.id).update({'plusOne.name': ''})
+        .then(res => {}, err => rej(err));
+    })
+  }
+
+
   
 }

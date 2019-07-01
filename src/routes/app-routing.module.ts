@@ -6,6 +6,7 @@ import { RegisterComponent } from 'src/app/components/auth/register/register.com
 import { UserPanelComponent } from 'src/app/components/user-panel/user-panel.component';
 import { AuthGuard } from 'src/app/services/auth/auth-guard.service';
 import { GuestListComponent } from 'src/app/components/user-tools/guest-list/guest-list.component';
+import { BudgetPlannerComponent } from 'src/app/components/user-tools/budget-planner/budget-planner.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'panel', component: UserPanelComponent, canActivate: [AuthGuard] },
   { path: 'panel/guest-list', component: GuestListComponent},
+  { path: 'panel/budget-planner', component: BudgetPlannerComponent},
   { path: '**', redirectTo: '' }
   
 ];

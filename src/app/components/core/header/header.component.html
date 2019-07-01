@@ -1,14 +1,14 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #6bef9c;">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #6bef9c;">
     <a class="navbar-brand" href="#">
         <img src="{{ logo }}" width="30" height="30" class="d-inline-block align-top" alt="">
         WeddingApp</a>
     
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="navbarTogglerDemo02"
+    <button class="navbar-toggler toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="navbarTogglerDemo02"
         aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0" data-toggle="collapse" data-target=".navbar-collapse.show">
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
@@ -18,13 +18,13 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tools</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownId" style="background-color: #83efab;">
-                    <a class="dropdown-item" href="#">Budget Planner</a>
+                    <a class="dropdown-item" [routerLink]="['panel', 'budget-planner']">Budget Planner</a>
                     <a class="dropdown-item" [routerLink]="['panel', 'guest-list']">Guest List</a>
                     <a class="dropdown-item" href="#">Vendors</a>
                 </div>
             </li>
         </ul>
-        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0" data-toggle="collapse" data-target=".navbar-collapse.show">
             <ng-template [ngIf]="!isAuthenticated()">
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="[ '/signin' ]">Sign In</a>

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class GuestListComponent implements OnInit {
   guests: Observable<any[]>;
   isInvited: boolean;
+  guestsNumber: number = 0;
 
   constructor(private guestService: GuestListService) { }
 
@@ -20,6 +21,12 @@ export class GuestListComponent implements OnInit {
       guests.sort((a, b) => {
         return a.name.localeCompare(b.name);//a.name < b.name ? -1 : 1;
       });
+      this.guestsNumber = guests.length;
+      for (const guest of guests) {
+        if (guest.plusOne.name !== '') {
+          this.guestsNumber++;
+        }
+      }
       return guests;
     }));
   }
@@ -34,34 +41,37 @@ export class GuestListComponent implements OnInit {
       .then(res => {
         console.log(res);
       })
-    }
-    
-      
+    }      
   }
 
-  onPlusOne(plusGuest){
-    const guest = {
-      name: `${plusGuest.name}'s plus one` 
-    }
-    this.guestService.createGuest(guest)
+ 
+
+  onPlusOne(guest){
+    // const guest = {
+    //   name: `${plusGuest.name}'s plus one`
+    // }
+    this.guestService.guestPlusOne(guest)
     .then(res => {
       console.log(res);
     })
   }
 
   onInvite(guest){
-    this.isInvited = !this.isInvited;
-    console.log(guest);
+    this.guestService.inviteGuest(guest);
   }
 
   onConfirm(guest){
-    console.log(guest);
+    this.guestService.confirmGuest(guest);
   }
 
   onDelete(guest){
-    console.log(guest);
+    this.guestService.deleteGuest(guest);
   }
 
+  onRemovePlusOne(guest){
+    console.log(guest)
+    this.guestService.removePlusOne(guest);
+  }
   
 
   
