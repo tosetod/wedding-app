@@ -1,14 +1,25 @@
 <div class="container">
-  <div class="row">
-    <div class="offset-md-3 col-md-4 mb-5 mt-3">
-      <input type="text" name="guestName" id="guest-name" class="form-control" #name (keydown.enter)="onAddGuest(name)">
+    <h4>Guest List Planner</h4>
+    <hr>
+    <div class="row">
+      <div class="offset-md-2 col-md-6">
+          <div class="form-group">
+              <label for="filter">Search:</label>
+              <input type="text" name="filter" id="filter" class="form-control" aria-describedby="helpId" [(ngModel)]="searchValue" (keyup)="onSearch(searchValue)">
+              <small id="helpId" class="text-muted">Type your guest name</small>
+            </div>
+      </div>
     </div>
-    <div class="col-md-3 mt-3 mb-5">
+  <div class="row">
+    <div class="offset-md-2 col-md-6 mb-5 mt-2">
+      <input type="text" name="guestName" id="guest-name" class="form-control" placeholder="Guest's Name..." #name (keydown.enter)="onAddGuest(name)">
+    </div>
+    <div class="col-md-3 mt-2 mb-5">
       <button class="btn btn-primary" type="submit" (click)="onAddGuest(name)">Add Guest</button>
     </div>
   </div>
   <div class="row d-flex ">
-    <div class="offset-md-2 col-md-10 justify-content-center">
+    <div class="offset-md-2 col-md-6 justify-content-center">
       <div *ngFor="let guest of guests | async; let i = index">
         <div class="row mb-2">
           <div class="col-md-6 guest">
@@ -24,7 +35,7 @@
           </div>
           <div class="col-md-6">
             <div class="btn-group" data-toggle="buttons">
-              <button type="button" class="btn btn-primary guest-list-button mr-1" (click)="onInvite(guest)" [disabled]='guest.isInvited'>{{ guest.isInvited ? 'Invited' : 'Invite' }}</button>
+              <button type="button" class="btn btn-primary guest-list-button ml-3 mr-1" (click)="onInvite(guest)" [disabled]='guest.isInvited'>{{ guest.isInvited ? 'Invited' : 'Invite' }}</button>
               <button type="button" class="btn btn-success guest-list-button mr-1" (click)="onConfirm(guest)" [disabled]='guest.confirmed'>{{ guest.confirmed ? 'Confirmed' : 'Confirm' }}</button>
               <button type="button" class="btn btn-danger guest-list-button" (click)="onDelete(guest)">Remove</button>
             </div>

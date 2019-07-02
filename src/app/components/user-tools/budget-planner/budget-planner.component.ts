@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BudgetPlannerService } from 'src/app/services/data-layer/budget-planner.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-budget-planner',
@@ -30,12 +30,11 @@ export class BudgetPlannerComponent implements OnInit {
       this.totalBudget = items.reduce((sum, current) => sum + current.budget, 0);
       this.totalOverUnder = items.reduce((sum, current) => sum + current.overUnder, 0);
       items.sort((a, b) => {
-        return a.amount < b.amount ? -1 : 1;
+        return a.amount < b.amount ? 1 : -1;
       });
       return items;
     }));
   }
-
 
   onAdd(type, amount, budget){
     if (type.value !== '' && amount.value !== '' && budget.value !== '') {

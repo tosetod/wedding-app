@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GuestListService } from 'src/app/services/data-layer/guest-list.service';
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs';
@@ -28,6 +28,23 @@ export class GuestListComponent implements OnInit {
         }
       }
       return guests;
+    }));
+  }
+
+
+  onSearch(value){
+    this.guests = this.guestService.getGuestsData()
+      .pipe(map(guests => {
+        guests.sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        });
+        this.guestsNumber = guests.length;
+        for (const guest of guests) {
+          if (guest.plusOne.name !== '') {
+            this.guestsNumber++;
+          }
+        }
+        return guests.filter(guest => guest.name.toLowerCase().includes(value.toLowerCase()));
     }));
   }
 
@@ -73,6 +90,5 @@ export class GuestListComponent implements OnInit {
     this.guestService.removePlusOne(guest);
   }
   
-
   
 }
