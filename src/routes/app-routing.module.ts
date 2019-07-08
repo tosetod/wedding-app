@@ -7,6 +7,7 @@ import { UserPanelComponent } from 'src/app/components/user-panel/user-panel.com
 import { AuthGuard } from 'src/app/services/auth/auth-guard.service';
 import { GuestListComponent } from 'src/app/components/user-tools/guest-list/guest-list.component';
 import { BudgetPlannerComponent } from 'src/app/components/user-tools/budget-planner/budget-planner.component';
+import { VendorsComponent } from 'src/app/components/user-tools/vendors/vendors.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'panel', component: UserPanelComponent, canActivate: [AuthGuard] },
   { path: 'panel/guest-list', component: GuestListComponent},
   { path: 'panel/budget-planner', component: BudgetPlannerComponent},
+  { path: 'panel/vendors', component: VendorsComponent},
   { path: '**', redirectTo: '' }
   
 ];

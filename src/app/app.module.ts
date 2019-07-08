@@ -17,6 +17,7 @@ import { HeaderComponent } from './components/core/header/header.component';
 import { UserPanelComponent } from './components/user-panel/user-panel.component';
 import { GuestListComponent } from './components/user-tools/guest-list/guest-list.component';
 import { BudgetPlannerComponent } from './components/user-tools/budget-planner/budget-planner.component';
+import { VendorsComponent } from './components/user-tools/vendors/vendors.component';
 
 registerLocaleData(localeDe, 'de');
 
@@ -29,7 +30,8 @@ registerLocaleData(localeDe, 'de');
     HeaderComponent,
     UserPanelComponent,
     GuestListComponent,
-    BudgetPlannerComponent
+    BudgetPlannerComponent,
+    VendorsComponent
   ],
   imports: [
     BrowserModule,
