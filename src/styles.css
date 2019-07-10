@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Andika&display=swap');
+
+* {
+    font-family: 'Andika', sans-serif;
+}
+
+form {
+    border: 1px solid lightgrey;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+@keyframes cssAnimation {
+to   { visibility: hidden; }
+}
+
+.err-message{
+    padding-left: 10px;
+    animation: cssAnimation 0s 5s forwards;
+    visibility: visible;
+}

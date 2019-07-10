@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #6bef9c;">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" [routerLink]="['']">
         <img src="{{ logo }}" width="30" height="30" class="d-inline-block align-top" alt="">
         WeddingApp</a>
     
@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0" data-toggle="collapse" data-target=".navbar-collapse.show">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" [routerLink]="['panel']">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -20,7 +20,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownId" style="background-color: #83efab;">
                     <a class="dropdown-item" [routerLink]="['panel', 'budget-planner']">Budget Planner</a>
                     <a class="dropdown-item" [routerLink]="['panel', 'guest-list']">Guest List</a>
-                    <a class="dropdown-item" href="#">Vendors</a>
+                    <a class="dropdown-item" [routerLink]="['panel', 'vendors']">Vendors</a>
                 </div>
             </li>
         </ul>

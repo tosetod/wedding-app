@@ -1,31 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataLayerService } from 'src/app/services/data-layer/user.service';
+import { Subscriber, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
+  subscription: Subscription;
+  errMessage: string;
 
-  constructor(private authService: AuthService, private dataLayer: DataLayerService) { }
+  constructor (private authService: AuthService, private dataLayer: DataLayerService) { }
   
   ngOnInit() {
+    this.subscription = this.authService.errMessage.subscribe(
+      message => this.errMessage = message
+    );
   }
 
-  onRegister (form: NgForm){
-     const email = form.value.email;
-     const password = form.value.password;
-     const confirmPassword = form.value.confirmPassword;
-    // const firstName = form.value.firstName;
-    // const lastName = form.value.lastName;
-    // const age = form.value.age;
-    // const wedDate = form.value.wedDate;
-    // const partName = form.value.partnerName;
-    // const partAge = form.value.partnerAge;
+  onRegister(form: NgForm) {
+    const email = form.value.email;
+    const password = form.value.password;
+    const confirmPassword = form.value.confirmPassword;
     const user = {
       email: form.value.email,
       firstName: form.value.firstName,
@@ -38,7 +38,13 @@ export class RegisterComponent implements OnInit {
     if (password === confirmPassword) {
       if (this.authService.registerUser(email, password)) {
         this.dataLayer.createUser(user);
+        form.reset();
       }
     }
   }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();//authService.errMessage.unsubscribe();
+  }
+
 }

@@ -69,7 +69,6 @@ export class GuestListComponent implements OnInit {
     // }
     this.guestService.guestPlusOne(guest)
     .then(res => {
-      console.log(res);
     })
   }
 

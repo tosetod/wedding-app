@@ -7,6 +7,7 @@ import { VendorService } from 'src/app/services/data-layer/vendors.service';
   styleUrls: ['./vendors.component.css']
 })
 export class VendorsComponent implements OnInit {
+ 
 
   restaurants: Promise<any>;
 

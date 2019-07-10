@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import * as firebase from 'firebase';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   token: string;
-  errMessage: string;
+  errMessage = new Subject<string>();
   emailSent: boolean;
 
   constructor(private router: Router){  }
@@ -19,14 +20,13 @@ export class AuthService {
         .then(() => {
             this.emailSent = true;
             return true;
-          //this.router.navigate(['']);
         })
         .catch(err => {
-          console.log(err);
+          this.errMessage.next(err)//emit(err);
         });
       })
       .catch(err => {
-        this.errMessage = err.message
+        this.errMessage.next(err)//.emit(err);
         return false;
       });
       return true;
@@ -44,7 +44,9 @@ export class AuthService {
               )
           }
         })
-      .catch(error => console.log(error));
+      .catch(error => {
+        this.errMessage.next(error)//.emit(error);
+      });
   }
 
 

@@ -6,6 +6,4 @@ export interface Guest {
     plusOne?: {
         name: string
     }
-    
-
 }

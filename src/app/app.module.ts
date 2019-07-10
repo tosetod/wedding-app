@@ -18,8 +18,18 @@ import { UserPanelComponent } from './components/user-panel/user-panel.component
 import { GuestListComponent } from './components/user-tools/guest-list/guest-list.component';
 import { BudgetPlannerComponent } from './components/user-tools/budget-planner/budget-planner.component';
 import { VendorsComponent } from './components/user-tools/vendors/vendors.component';
+import * as firebase from 'firebase';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faRing } from '@fortawesome/free-solid-svg-icons';
+import { faMobile, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
+
+firebase.initializeApp(environment.firebaseConfig);
 
 registerLocaleData(localeDe, 'de');
+
+library.add(faRing, faMobile, faPhone, faFacebook, faFacebookSquare);
 
 @NgModule({
   declarations: [
@@ -35,6 +45,7 @@ registerLocaleData(localeDe, 'de');
   ],
   imports: [
     BrowserModule,
+    FontAwesomeModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -44,4 +55,5 @@ registerLocaleData(localeDe, 'de');
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+}

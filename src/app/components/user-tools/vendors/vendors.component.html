@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="card w-50 mx-auto mt-2" *ngFor="let restaurant of restaurants | async">
+  <div class="card w-50 mx-auto mt-2 content" *ngFor="let restaurant of restaurants | async">
     <img class="card-img-top" style="width: 200px" [src]="restaurant.logo" alt="Card image" *ngIf="restaurant.logo != ''">
     <div class="card-body">
       <h4 class="card-title">
@@ -7,8 +7,14 @@
       </h4>
       <p>{{ restaurant.moreDetails }}</p>
       <p class="card-text">{{ restaurant.details }}</p>
-      <p><a [href]="'tel:'+restaurant.tel">Телефон: {{ restaurant.tel }}</a></p>
-      <a [href]="restaurant.facebook" target="_blank" class="btn btn-primary" *ngIf="restaurant.facebook != null">Facebook</a>
+      <p>
+        <a [href]="'tel:'+restaurant.tel">
+          <fa-icon [icon]="['fas', 'phone']" flip="both"></fa-icon> {{ restaurant.tel }}
+        </a>
+      </p>
+      <a [href]="restaurant.facebook" target="_blank" *ngIf="restaurant.facebook != null">
+        <fa-icon [icon]="['fab', 'facebook-square']" size="2x"></fa-icon>
+        </a>
       <a [href]="restaurant.website" target="_blank" class="btn btn-primary" *ngIf="restaurant.website != null">Website</a>
       <a [href]="restaurant.directions" target="_blank" class="btn btn-primary" *ngIf="restaurant.directions != null">Directions</a>
     </div>

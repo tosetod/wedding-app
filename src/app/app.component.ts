@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import * as firebase from 'firebase'
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +9,13 @@ export class AppComponent implements OnInit {
   title = 'WeddingApp';
  
   ngOnInit(){
+  }
+
+  onActivate(spinner){
+    spinner.params.styles = {display: "none"};
+  }
+
+  onDeactivate(spinner){
+    console.log(spinner);
   }
 }
