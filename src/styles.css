@@ -20,3 +20,7 @@ to   { visibility: hidden; }
     animation: cssAnimation 0s 5s forwards;
     visibility: visible;
 }
+
+a{
+    color: #6bef9c;
+}

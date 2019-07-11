@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { DataLayerService } from 'src/app/services/data-layer/user.service';
-import { Subscriber, Subscription } from 'rxjs';
+import { UserService } from 'src/app/services/data-layer/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   errMessage: string;
 
-  constructor (private authService: AuthService, private dataLayer: DataLayerService) { }
+  constructor (private authService: AuthService, private userService: UserService) { }
   
   ngOnInit() {
     this.subscription = this.authService.errMessage.subscribe(
@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const password = form.value.password;
     const confirmPassword = form.value.confirmPassword;
     const user = {
+      id: this.userService.generateId(),
       email: form.value.email,
       firstName: form.value.firstName,
       lastName: form.value.lastName,
@@ -37,14 +38,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
     if (password === confirmPassword) {
       if (this.authService.registerUser(email, password)) {
-        this.dataLayer.createUser(user);
+        this.userService.createUser(user);
         form.reset();
       }
     }
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();//authService.errMessage.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
 }

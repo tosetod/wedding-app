@@ -21,15 +21,14 @@ import { VendorsComponent } from './components/user-tools/vendors/vendors.compon
 import * as firebase from 'firebase';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faRing } from '@fortawesome/free-solid-svg-icons';
-import { faMobile, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { faFacebook, faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
+import { faRing, faPhone, faDirections, faGlobe, faCalculator, faClipboardList, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
 
 firebase.initializeApp(environment.firebaseConfig);
 
 registerLocaleData(localeDe, 'de');
 
-library.add(faRing, faMobile, faPhone, faFacebook, faFacebookSquare);
+library.add(faRing, faPhone, faFacebookSquare, faDirections, faGlobe, faCalculator, faClipboardList, faUtensils);
 
 @NgModule({
   declarations: [
@@ -44,12 +43,12 @@ library.add(faRing, faMobile, faPhone, faFacebook, faFacebookSquare);
     VendorsComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     BrowserModule,
     FontAwesomeModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule
   ],
   providers: [],

@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators'
 })
 export class GuestListService {
 
-  guestsChanged = [];
+  
 
   constructor(private firestore: AngularFirestore) { 
   }

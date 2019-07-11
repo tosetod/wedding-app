@@ -1,4 +1,5 @@
 export class Restaurant {
+    id?: string;
     tel: string;
     logo: string;
     companyName: string;

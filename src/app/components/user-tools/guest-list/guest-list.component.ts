@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { GuestListService } from 'src/app/services/data-layer/guest-list.service';
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs';
@@ -12,6 +12,7 @@ export class GuestListComponent implements OnInit {
   guests: Observable<any[]>;
   isInvited: boolean;
   guestsNumber: number = 0;
+  @Output() messageEvent = new EventEmitter<number>();
 
   constructor(private guestService: GuestListService) { }
 
@@ -19,9 +20,10 @@ export class GuestListComponent implements OnInit {
     this.guests = this.guestService.getGuestsValueChanges();
     this.guests = this.guestService.getGuestsData().pipe(map(guests => {
       guests.sort((a, b) => {
-        return a.name.localeCompare(b.name);//a.name < b.name ? -1 : 1;
+        return a.name.localeCompare(b.name);
       });
       this.guestsNumber = guests.length;
+      this.messageEvent.emit(guests.length);
       for (const guest of guests) {
         if (guest.plusOne.name !== '') {
           this.guestsNumber++;
@@ -61,12 +63,7 @@ export class GuestListComponent implements OnInit {
     }      
   }
 
- 
-
   onPlusOne(guest){
-    // const guest = {
-    //   name: `${plusGuest.name}'s plus one`
-    // }
     this.guestService.guestPlusOne(guest)
     .then(res => {
     })
@@ -85,7 +82,6 @@ export class GuestListComponent implements OnInit {
   }
 
   onRemovePlusOne(guest){
-    console.log(guest)
     this.guestService.removePlusOne(guest);
   }
   

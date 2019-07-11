@@ -22,11 +22,11 @@ export class AuthService {
             return true;
         })
         .catch(err => {
-          this.errMessage.next(err)//emit(err);
+          this.errMessage.next(err);
         });
       })
       .catch(err => {
-        this.errMessage.next(err)//.emit(err);
+        this.errMessage.next(err);
         return false;
       });
       return true;
@@ -45,7 +45,7 @@ export class AuthService {
           }
         })
       .catch(error => {
-        this.errMessage.next(error)//.emit(error);
+        this.errMessage.next(error);
       });
   }
 

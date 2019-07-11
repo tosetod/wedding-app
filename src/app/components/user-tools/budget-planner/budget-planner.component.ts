@@ -53,8 +53,6 @@ export class BudgetPlannerComponent implements OnInit {
       }
     }
     
-    
-    
   }
 
   onEdit(item){

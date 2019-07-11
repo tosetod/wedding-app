@@ -1,7 +1,10 @@
-/* #btn-signin{
-    margin-right: 5%;
-} */
-.carousel{
-    height: 400px;
-    width: 600px;
+div.relative {
+    position: relative;
+  } 
+  
+div.absolute {
+    position: absolute;
+    top: 40px;
+    right: 150px;
+    color: white;
 }

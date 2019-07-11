@@ -1,22 +1,29 @@
 <div class="container">
-  <div class="card w-50 mx-auto mt-2 content" *ngFor="let restaurant of restaurants | async">
+  <h4 id="title-vendors">Choose the right restaurant:</h4>
+  <hr>
+  <div class="card w-50 mx-auto mt-3 content" *ngFor="let restaurant of restaurants | async">
     <img class="card-img-top" style="width: 200px" [src]="restaurant.logo" alt="Card image" *ngIf="restaurant.logo != ''">
     <div class="card-body">
       <h4 class="card-title">
-        <a routerLink="/panel"><u>{{ restaurant.companyName }}</u></a>
+        {{ restaurant.companyName }} <span class="restaurant-added" *ngIf="restaurantAdded == restaurant">(Restaurant added to you panel)</span>
       </h4>
       <p>{{ restaurant.moreDetails }}</p>
       <p class="card-text">{{ restaurant.details }}</p>
       <p>
-        <a [href]="'tel:'+restaurant.tel">
+        <a title="Phone" [href]="'tel:'+restaurant.tel">
           <fa-icon [icon]="['fas', 'phone']" flip="both"></fa-icon> {{ restaurant.tel }}
         </a>
       </p>
-      <a [href]="restaurant.facebook" target="_blank" *ngIf="restaurant.facebook != null">
+      <a title="Facebook" [href]="restaurant.facebook" target="_blank" *ngIf="restaurant.facebook != null">
         <fa-icon [icon]="['fab', 'facebook-square']" size="2x"></fa-icon>
-        </a>
-      <a [href]="restaurant.website" target="_blank" class="btn btn-primary" *ngIf="restaurant.website != null">Website</a>
-      <a [href]="restaurant.directions" target="_blank" class="btn btn-primary" *ngIf="restaurant.directions != null">Directions</a>
+      </a>
+      <a title="Website" [href]="restaurant.website" class="icon-link" target="_blank" *ngIf="restaurant.website != null">
+        <fa-icon [icon]="['fas', 'globe']" size="2x"></fa-icon>
+      </a>
+      <a title="Directions" [href]="restaurant.directions" class="icon-link" target="_blank" *ngIf="restaurant.directions != null">
+        <fa-icon [icon]="['fas', 'directions']" size="2x"></fa-icon>
+      </a>
+      <button class="btn btn-primary float-right" (click)="onAdd(restaurant)" *ngIf="restaurantAdded != restaurant">Add</button>
     </div>
   </div>
 </div>

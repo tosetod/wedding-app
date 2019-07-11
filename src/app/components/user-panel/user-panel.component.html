@@ -1,31 +1,48 @@
 <div class="container">
+  <h4 class="hello">Hello {{ user.firstName }}!</h4>
+  <h5>Welcome to your wedding orginizer</h5>
+  <h4>Choose your tool so you can easily plan your wedding:</h4>
+  <hr>
   <div class="card-columns panel-cards">
-    <a href="">
-      <div class="card">
-        <img class="card-img-top" src="holder.js/100x180/" alt="">
+    <a [routerLink]="['budget-planner']">
+      <div>
+        <fa-icon class="panel-icon" [icon]="['fas', 'calculator']" size="6x"></fa-icon>
         <div class="card-body">
           <h4 class="card-title">Budget Planner</h4>
           <p class="card-text">Plan Your Budget</p>
         </div>
       </div>
     </a>
-    <a href="">
-      <div class="card">
-        <img class="card-img-top" src="holder.js/100x180/" alt="">
+    <a [routerLink]="['guest-list']">
+      <div>
+        <fa-icon class="panel-icon" [icon]="['fas', 'clipboard-list']" size="6x"></fa-icon>
         <div class="card-body">
           <h4 class="card-title">Guest List</h4>
           <p class="card-text">Create Your Guest List</p>
         </div>
       </div>
     </a>
-    <a href="">
-      <div class="card">
-        <img class="card-img-top" src="holder.js/100x180/" alt="">
+    <a [routerLink]="['vendors']">
+      <div>
+        <fa-icon class="panel-icon" [icon]="['fas', 'utensils']" size="6x"></fa-icon>
         <div class="card-body">
           <h4 class="card-title">Vendors</h4>
           <p class="card-text">Choose Your Vendors</p>
         </div>
       </div>
     </a>
+  </div>
+  <hr>
+  <div>
+    <h5>Your Wedding:</h5>
+    <div>
+      <p>Wedding date: {{ user.wedDate | date }}</p>
+      <p>Restaurant:
+        <span *ngFor="let rest of restaurants | async">
+          {{ rest.companyName }}
+          <button class="btn btn-outline-danger btn-sm" (click)="onRemove(rest)">Remove</button>
+        </span>
+      </p>
+    </div>
   </div>
 </div>

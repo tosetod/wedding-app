@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Restaurant } from 'src/app/models/restaurant.model';
 import * as $ from 'jquery';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,50 @@ export class VendorService {
 
 
 
-  constructor() { }
+  constructor(private firestore: AngularFirestore) { }
+
+  createRestaurant(restaurant: Restaurant){
+    const newRestaurant = {
+      companyName: restaurant.companyName,
+      details: restaurant.details,
+      moreDetails: restaurant.moreDetails,
+      tel: restaurant.tel,
+      facebook: restaurant.facebook,
+      website: restaurant.website,
+      logo: restaurant.logo,
+      directions: restaurant.directions
+    }
+    return new Promise<any>((resolve, reject) => {
+      this.firestore
+        .collection('restaurants')
+        .add(newRestaurant)
+        .then(res => {}, err => reject(err));
+    })
+  }
+
+  getRestaurantsValueChanges(){
+    return this.firestore
+            .collection('restaurants').valueChanges();
+  }
+
+  getRestaurantsData(){
+    return this.firestore.collection('restaurants').snapshotChanges().pipe(map(
+      actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Restaurant;
+          const id = a.payload.doc.id;
+          return { id, ...data};
+        })
+      }
+    ));
+  }
+
+  deleteRestaurant(restaurant: Restaurant){
+    return new Promise<any>((res, rej) => {
+      this.firestore.collection('restaurants').doc(restaurant.id).delete()
+        .then(res => {}, err => rej(err));
+    })
+  }
 
   async getData() {
     let doc: Node[];
