@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { GuestListService } from 'src/app/services/data-layer/guest-list.service';
-import { map } from 'rxjs/operators'
+import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { Observable } from 'rxjs';
 
 @Component({
@@ -34,9 +34,12 @@ export class GuestListComponent implements OnInit {
   }
 
 
-  onSearch(value){
+  onSearch(value: string){
     this.guests = this.guestService.getGuestsData()
-      .pipe(map(guests => {
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        map(guests => {
         guests.sort((a, b) => {
           return a.name.localeCompare(b.name);
         });
