@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'panel', component: UserPanelComponent, canActivate: [AuthGuard]}, 
   { path: 'panel/guest-list', component: GuestListComponent, canActivate: [AuthGuard]},
-  { path: 'panel/budget-planner', component: BudgetPlannerComponent, canActivate: [AuthGuard]},
+  { path: 'panel/budget-planner', component: BudgetPlannerComponent}, //, canActivate: [AuthGuard]
   { path: 'panel/vendors', component: VendorsComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '' }
   

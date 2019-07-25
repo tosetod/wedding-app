@@ -7,7 +7,7 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { environment } from "src/environments/environment";
 import { registerLocaleData } from '@angular/common';
-import localeDe from '@angular/common/locales/de';
+import localeMk from '@angular/common/locales/mk';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/core/home/home.component';
@@ -26,7 +26,7 @@ import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
 
 firebase.initializeApp(environment.firebaseConfig);
 
-registerLocaleData(localeDe, 'de');
+registerLocaleData(localeMk, 'mk');
 
 library.add(faRing, faPhone, faFacebookSquare, faDirections, faGlobe, faCalculator, faClipboardList, faUtensils);
 

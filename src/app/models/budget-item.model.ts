@@ -3,6 +3,6 @@ export interface BudgetItem{
     type: string,
     amount: number,
     budget: number,
-    overUnder:number,
-    editMode: boolean
+    overUnder?:number,
+    editMode?: boolean
 }
