@@ -12,7 +12,7 @@ export class BudgetPlannerComponent implements OnInit {
   
 
 
-  //items: Observable<any[]>;
+  //items: Observable<BudgetItem[]>;
   
   editMode:boolean;
   stillInEditMode = '';
@@ -21,10 +21,14 @@ export class BudgetPlannerComponent implements OnInit {
   totalBudget: number = 0;
   totalOverUnder: number = 0;
 
-  constructor (private budgetService: BudgetPlannerService) { }
+  constructor (private budgetService: BudgetPlannerService) { 
+  }
 
 
   ngOnInit() {
+    this.budgetService.budgetItems.subscribe(
+      items => this.items = items
+    )
     this.budgetService
           .getItemsData()
           .pipe(
@@ -39,8 +43,9 @@ export class BudgetPlannerComponent implements OnInit {
                 }
             ))
           .subscribe(data => { 
-            this.items = data 
+            this.budgetService.budgetItems.next(data) 
           });
+    
   }
 
   onAdd(type, amount, budget) {
@@ -53,7 +58,7 @@ export class BudgetPlannerComponent implements OnInit {
     }
 
     this.budgetService.createItem(newItem).subscribe(
-      item => this.items.push(item)
+      item => this.budgetService.budgetItems.next([...this.items, item])
     );
 
     type.value = '';
@@ -83,15 +88,7 @@ export class BudgetPlannerComponent implements OnInit {
       budget: item.budget
     }
     this.budgetService.updateItem(editedItem).subscribe(res => {
-        this.items.filter((bI, index) => {
-            if (bI.id === item.id) {
-              delete res['id'];
-              this.items.splice(index, 1, res)
-            }
-          }
-        )
-        // delete res['id'];
-        // this.items.push(res);
+        this.budgetService.budgetItems.next([...this.items, res])
         item.editMode = false;
       }
     );
@@ -100,8 +97,13 @@ export class BudgetPlannerComponent implements OnInit {
     
   }
 
-  onRemove(item) {
-    this.budgetService.deleteItem(item);
+  onRemove(item: BudgetItem) {
+    this.budgetService.deleteItem(item).subscribe();
+    this.items.filter((x, i) => {
+      if (item.id === x.id) {
+        this.items.splice(i, 1);
+      }
+    })
   }
 
 }

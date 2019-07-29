@@ -28,21 +28,21 @@
               class="btn btn-sm btn-outline-success float-right" 
               (click)="onPlusOne(guest)" 
               *ngIf="!guest.name.endsWith('plus one')"
-              [disabled]="guest.plusOne.name !== ''"
+              [disabled]="guest.plusOne !== ''"
               >
               +1
             </button>
           </div>
           <div class="col-md-6">
             <div class="btn-group" data-toggle="buttons">
-              <button type="button" class="btn btn-primary guest-list-button ml-3 mr-1" (click)="onInvite(guest)" [disabled]='guest.isInvited'>{{ guest.isInvited ? 'Invited' : 'Invite' }}</button>
-              <button type="button" class="btn btn-success guest-list-button mr-1" (click)="onConfirm(guest)" [disabled]='guest.confirmed'>{{ guest.confirmed ? 'Confirmed' : 'Confirm' }}</button>
+              <button type="button" class="btn btn-primary guest-list-button ml-3 mr-1" (click)="onUpdate(guest)" [disabled]='guest.isInvited'>{{ guest.isInvited ? 'Invited' : 'Invite' }}</button>
+              <button type="button" class="btn btn-success guest-list-button mr-1" (click)="onUpdate(guest)" [disabled]='guest.confirmed'>{{ guest.confirmed ? 'Confirmed' : 'Confirm' }}</button>
               <button type="button" class="btn btn-danger guest-list-button" (click)="onDelete(guest)">Remove</button>
             </div>
           </div>
         </div>
-        <div class="col-md-6 guest" id="plus-one" *ngIf="guest.plusOne.name !== ''">
-          {{ guest.plusOne.name }}
+        <div class="col-md-6 guest" id="plus-one" *ngIf="guest.plusOne !== ''">
+          {{ guest.plusOne }}
         <button type="button" class="btn btn-outline-danger btn-sm float-right" (click)="onRemovePlusOne(guest)">Remove</button>
         </div>
       </div>

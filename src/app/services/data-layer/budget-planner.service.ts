@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BudgetItem } from 'src/app/models/budget-item.model';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BudgetPlannerService {
 
+  budgetItems = new Subject<BudgetItem[]>();
   budgetPlannerUrl = 'http://localhost:8080/wedding/1/budget-planner';
   headers = new HttpHeaders({
     headers: ['Content-Type', 'application-json']
   });
-  constructor(private firestore: AngularFirestore, private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   createItem(budgetItem: BudgetItem){
     
@@ -23,7 +24,7 @@ export class BudgetPlannerService {
           {
             headers: this.headers
           }
-        );
+        )
       }
       throw new Error("Bad Request");
   }
@@ -34,11 +35,6 @@ export class BudgetPlannerService {
           headers: this.headers
         }
       )
-  }
-
-  getItemsValueChanges(){
-    return this.firestore
-            .collection('budget').valueChanges();
   }
 
   updateItem(item: BudgetItem){
@@ -58,9 +54,12 @@ export class BudgetPlannerService {
   }
 
   deleteItem(item: BudgetItem){
-    return new Promise<any>((res, rej) => {
-      this.firestore.collection('budget').doc(item.id).delete()
-        .then(res => {}, err => rej(err));
-    })
+    return this.http.delete<BudgetItem>(this.budgetPlannerUrl,
+                          {
+                            headers: this.headers,
+                            params: new HttpParams().set('id', item.id)
+                          }
+                          
+      )
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Guest } from 'src/app/models/guest.model';
 import { map } from 'rxjs/operators'
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -9,82 +9,33 @@ import { map } from 'rxjs/operators'
 })
 export class GuestListService {
 
-  
+  guestsUrl = 'http://localhost:8080/wedding/1/guests'
 
-  constructor(private firestore: AngularFirestore) { 
+  constructor(private http: HttpClient) { 
   }
 
   createGuest(guest: Guest){
-    const newGuest = {
-      name: guest.name,
-      isInvited: false,
-      confirmed: false,
-      plusOne: {
-        name: ''
-      }
-    }
-    return new Promise<any>((resolve, reject) => {
-      this.firestore
-        .collection('guests')
-        .add(newGuest)
-        .then(res => {}, err => reject(err));
-    })
+    return this.http.post<Guest>(this.guestsUrl, guest);
   }
 
   getGuestsData(){
-    return this.firestore.collection('guests').snapshotChanges().pipe(map(
-      actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data() as Guest;
-          const id = a.payload.doc.id;
-          return { id, ...data};
-        })
-      }
-    ));
+    return this.http.get<Guest[]>(this.guestsUrl);
   }
 
-  
-
-  getGuestsValueChanges(){
-    return this.firestore
-            .collection('guests').valueChanges();
-  }
 
   deleteGuest(guest: Guest){
-    return new Promise<any>((res, rej) => {
-      this.firestore.collection('guests').doc(guest.id).delete()
-        .then(res => {}, err => rej(err));
-    })
+    return this.http.delete<Guest>(this.guestsUrl, {params: new HttpParams().set('id', guest.id)});
   }
 
-  guestPlusOne(guest: Guest){
-    return new Promise<any>((res, rej) => {
-      this.firestore.collection('guests').doc(guest.id).update({'plusOne.name': guest.name + "'s plus one"})
-        .then(res => {}, err => rej(err));
-    })
+  updateGuest(guest: Guest){
+    const editedGuest = {
+      name: guest.name,
+      isInvited: guest.isInvited,
+      confirmed: guest.confirmed,
+      plusOne: guest.plusOne
+    }
+
+    return this.http.put<Guest>(this.guestsUrl, editedGuest, {params: new HttpParams().set('id', guest.id)})
   }
-
-  confirmGuest(guest: Guest){
-    return new Promise<any>((res, rej) => {
-      this.firestore.collection('guests').doc(guest.id).update({'confirmed': true})
-        .then(res => {}, err => rej(err));
-    })
-  }
-
-  inviteGuest(guest:Guest){
-    return new Promise<any>((res, rej) => {
-      this.firestore.collection('guests').doc(guest.id).update({'isInvited': true})
-        .then(res => {}, err => rej(err));
-    })
-  }
-
-  removePlusOne(guest: Guest){
-    return new Promise<any>((res, rej) => {
-      this.firestore.collection('guests').doc(guest.id).update({'plusOne.name': ''})
-        .then(res => {}, err => rej(err));
-    })
-  }
-
-
   
 }

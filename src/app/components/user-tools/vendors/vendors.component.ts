@@ -16,6 +16,7 @@ export class VendorsComponent implements OnInit {
 
   ngOnInit() {
     this.restaurants = this.vendorService.getData();
+    
   }
 
   onAdd(restaurant){

@@ -3,33 +3,20 @@ import { Restaurant } from 'src/app/models/restaurant.model';
 import * as $ from 'jquery';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators'
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VendorService {
 
+  url = 'http://localhost:8080/restaurants'
 
-
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore, private http: HttpClient) { }
 
   createRestaurant(restaurant: Restaurant){
-    const newRestaurant = {
-      companyName: restaurant.companyName,
-      details: restaurant.details,
-      moreDetails: restaurant.moreDetails,
-      tel: restaurant.tel,
-      facebook: restaurant.facebook,
-      website: restaurant.website,
-      logo: restaurant.logo,
-      directions: restaurant.directions
-    }
-    return new Promise<any>((resolve, reject) => {
-      this.firestore
-        .collection('restaurants')
-        .add(newRestaurant)
-        .then(res => {}, err => reject(err));
-    })
+    
+    return this.http.post<Restaurant>(this.url + '/new', restaurant);
   }
 
   getRestaurantsValueChanges(){

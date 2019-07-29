@@ -3,7 +3,5 @@ export interface Guest {
     name: string;
     isInvited?: boolean;
     confirmed?: boolean;
-    plusOne?: {
-        name: string
-    }
+    plusOne?: string
 }
