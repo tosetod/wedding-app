@@ -1,7 +1,7 @@
 export interface Guest {
     id?: string,
     name: string;
-    isInvited?: boolean;
+    invited?: boolean;
     confirmed?: boolean;
-    plusOne?: string
+    plusOne?: boolean;
 }

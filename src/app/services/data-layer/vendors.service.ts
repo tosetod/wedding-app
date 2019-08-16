@@ -10,12 +10,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class VendorService {
 
-  url = 'http://localhost:8080/restaurants'
+  url = 'http://localhost:8080/restaurants';
 
   constructor(private firestore: AngularFirestore, private http: HttpClient) { }
 
   createRestaurant(restaurant: Restaurant){
-    
+
     return this.http.post<Restaurant>(this.url + '/new', restaurant);
   }
 
@@ -58,12 +58,12 @@ export class VendorService {
     $(".tcall", doc).each((index, value) => {
       if (index % 2 === 0) {
         let r = new Restaurant();
-        r.tel = value.getAttribute("href").match(telRegex).toString()
+        r.phone = value.getAttribute("href").match(telRegex).toString()
         restaurants.push(r);
       }
     });
     $("img.logo", doc).each((index, value) => {
-      restaurants[index].logo = value.getAttribute("src");
+      restaurants[index].logoUrl = value.getAttribute("src");
 
     });
     $("a.companyname", doc).each((index, value) => {
@@ -89,8 +89,8 @@ export class VendorService {
 
     });
     for (const rest of restaurants) {
-      if (!rest.tel.startsWith("0")) {
-        rest.tel = "0" + rest.tel;
+      if (!rest.phone.startsWith("0")) {
+        rest.phone = "0" + rest.phone;
       }
     }
     return restaurants;

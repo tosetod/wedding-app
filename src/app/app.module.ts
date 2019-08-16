@@ -54,5 +54,5 @@ library.add(faRing, faPhone, faFacebookSquare, faDirections, faGlobe, faCalculat
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
 }

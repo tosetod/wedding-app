@@ -11,23 +11,23 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./user-panel.component.css']
 })
 export class UserPanelComponent implements OnInit,AfterContentInit, OnDestroy {
-  
+
   subscription: Subscription;
   user: User;
   restaurants: Observable<any[]>;
-  
+
   constructor(private userService: UserService, private vendorsService: VendorService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.restaurants = this.vendorsService.getRestaurantsValueChanges();
-    this.restaurants = this.vendorsService.getRestaurantsData().pipe(map(restaurants => restaurants));  
+    this.restaurants = this.vendorsService.getRestaurantsData().pipe(map(restaurants => restaurants));
   }
 
   ngAfterContentInit(): void {
+    this.userService.getUser();
     this.subscription = this.userService.user.subscribe(
       user => this.user = user
-    ); 
-    this.userService.getUser();
+    );
     const date: number  = new Date(this.user.wedDate).getMilliseconds()
     console.log(date);
   }

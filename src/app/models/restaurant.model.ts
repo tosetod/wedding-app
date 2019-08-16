@@ -1,7 +1,7 @@
 export class Restaurant {
     id?: string;
-    tel: string;
-    logo: string;
+    phone: string;
+    logoUrl: string;
     companyName: string;
     details: string;
     moreDetails: string;
@@ -10,6 +10,6 @@ export class Restaurant {
     directions: string;
 
     constructor(){
-        
+
     }
 }

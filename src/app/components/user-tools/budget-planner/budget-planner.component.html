@@ -68,13 +68,13 @@
               <tr>
                 <td scope="row">--</td>
                 <td scope="row">Total:</td>
-                <td>{{ totalAmount | currency:'EUR':'symbol':'1.2-2':'mk' }}</td>
-                <td>{{ totalBudget | currency:'EUR':'symbol':'1.2-2':'mk' }}</td>
-                <td>{{ totalOverUnder > 0 ? '+' : '' }}{{ totalOverUnder | currency:'EUR':'symbol':'2.2-2':'mk'}}</td>
+                <td>{{ total.amount | currency:'EUR':'symbol':'1.2-2':'mk' }}</td>
+                <td>{{ total.budget | currency:'EUR':'symbol':'1.2-2':'mk' }}</td>
+                <td>{{ total.overUnder > 0 ? '+' : '' }}{{ total.overUnder | currency:'EUR':'symbol':'2.2-2':'mk'}}</td>
                 <td></td>
               </tr>
             </tbody>
         </table>
       </div>
   </div>
- 
+

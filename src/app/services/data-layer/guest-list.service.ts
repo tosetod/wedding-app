@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Guest } from 'src/app/models/guest.model';
 import { map } from 'rxjs/operators'
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -9,9 +10,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class GuestListService {
 
-  guestsUrl = 'http://localhost:8080/wedding/1/guests'
+  guestsUrl = 'http://localhost:8080/wedding/1/guests';
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
 
   createGuest(guest: Guest){
@@ -28,14 +29,8 @@ export class GuestListService {
   }
 
   updateGuest(guest: Guest){
-    const editedGuest = {
-      name: guest.name,
-      isInvited: guest.isInvited,
-      confirmed: guest.confirmed,
-      plusOne: guest.plusOne
-    }
 
-    return this.http.put<Guest>(this.guestsUrl, editedGuest, {params: new HttpParams().set('id', guest.id)})
+    return this.http.put<Guest>(this.guestsUrl, guest, {params: new HttpParams().set('id', guest.id)})
   }
-  
+
 }

@@ -8,15 +8,24 @@ import { Restaurant } from 'src/app/models/restaurant.model';
   styleUrls: ['./vendors.component.css']
 })
 export class VendorsComponent implements OnInit {
- 
+
   restaurants: Promise<any>;
   restaurantAdded: Restaurant;
+  rests: Restaurant[] = [];
 
   constructor (private vendorService: VendorService) { }
 
   ngOnInit() {
     this.restaurants = this.vendorService.getData();
-    
+    this.vendorService.getData().then(r => {
+      this.rests = r;
+      console.log(this.rests);
+      this.rests.forEach(element => {
+        this.vendorService.createRestaurant(element).subscribe();
+      });
+    }
+    );
+
   }
 
   onAdd(restaurant){

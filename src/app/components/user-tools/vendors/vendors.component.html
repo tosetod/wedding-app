@@ -2,7 +2,7 @@
   <h4 id="title-vendors">Choose the right restaurant:</h4>
   <hr>
   <div class="card w-50 mx-auto mt-3 content" *ngFor="let restaurant of restaurants | async">
-    <img class="card-img-top" style="width: 200px" [src]="restaurant.logo" alt="Card image" *ngIf="restaurant.logo != ''">
+    <img class="card-img-top" style="width: 200px" [src]="restaurant.logoUrl" alt="Card image" *ngIf="restaurant.logoUrl != null">
     <div class="card-body">
       <h4 class="card-title">
         {{ restaurant.companyName }} <span class="restaurant-added" *ngIf="restaurantAdded == restaurant">(Restaurant added to you panel)</span>
@@ -10,8 +10,8 @@
       <p>{{ restaurant.moreDetails }}</p>
       <p class="card-text">{{ restaurant.details }}</p>
       <p>
-        <a title="Phone" [href]="'tel:'+restaurant.tel">
-          <fa-icon [icon]="['fas', 'phone']" flip="both"></fa-icon> {{ restaurant.tel }}
+        <a title="Phone" [href]="'tel:'+restaurant.phone">
+          <fa-icon [icon]="['fas', 'phone']" flip="both"></fa-icon> {{ restaurant.phone }}
         </a>
       </p>
       <a title="Facebook" [href]="restaurant.facebook" target="_blank" *ngIf="restaurant.facebook != null">

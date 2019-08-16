@@ -9,19 +9,24 @@ import { BudgetItem } from 'src/app/models/budget-item.model';
   styleUrls: ['./budget-planner.component.css']
 })
 export class BudgetPlannerComponent implements OnInit {
-  
+
 
 
   //items: Observable<BudgetItem[]>;
-  
+
   editMode:boolean;
   stillInEditMode = '';
   items: BudgetItem[] = [];
-  totalAmount: number = 0;
-  totalBudget: number = 0;
-  totalOverUnder: number = 0;
+  // totalAmount: number = 0;
+  // totalBudget: number = 0;
+  // totalOverUnder: number = 0;
+  total = {
+    amount: 0,
+    budget: 0,
+    overUnder: 0
+  };
 
-  constructor (private budgetService: BudgetPlannerService) { 
+  constructor (private budgetService: BudgetPlannerService) {
   }
 
 
@@ -33,19 +38,19 @@ export class BudgetPlannerComponent implements OnInit {
           .getItemsData()
           .pipe(
             map(items => {
-                  this.totalAmount = items.reduce((sum, current) => sum + current.amount, 0);
-                  this.totalBudget = items.reduce((sum, current) => sum + current.budget, 0);
-                  this.totalOverUnder = items.reduce((sum, current) => sum + current.overUnder, 0);
+                  this.total.amount = items.reduce((sum, current) => sum + current.amount, 0);
+                  this.total.budget = items.reduce((sum, current) => sum + current.budget, 0);
+                  this.total.overUnder = items.reduce((sum, current) => sum + current.overUnder, 0);
                   items.sort((a, b) => {
                     return a.amount < b.amount ? 1 : -1;
                   });
                   return items;
                 }
             ))
-          .subscribe(data => { 
-            this.budgetService.budgetItems.next(data) 
+          .subscribe(data => {
+            this.budgetService.budgetItems.next(data);
           });
-    
+
   }
 
   onAdd(type, amount, budget) {
@@ -60,7 +65,7 @@ export class BudgetPlannerComponent implements OnInit {
     this.budgetService.createItem(newItem).subscribe(
       item => this.budgetService.budgetItems.next([...this.items, item])
     );
-
+    this.total = this.budgetService.getTotals([...this.items, newItem]);
     type.value = '';
     amount.value = '';
     budget.value = '';
@@ -75,26 +80,33 @@ export class BudgetPlannerComponent implements OnInit {
     if (!this.editMode) {
       item.editMode = true;
       this.editMode = true;
-      
     }
-    
   }
 
   onSave(item: BudgetItem) {
-    const editedItem = {
-      id: item.id,
-      type: item.type,
-      amount:item.amount,
-      budget: item.budget
-    }
-    this.budgetService.updateItem(editedItem).subscribe(res => {
-        this.budgetService.budgetItems.next([...this.items, res])
-        item.editMode = false;
+    if ((item.type.trim() !== "") && (item.amount !== null) && (item.budget !== null)) {
+      const editedItem = {
+        id: item.id,
+        type: item.type,
+        amount:item.amount,
+        budget: item.budget
       }
-    );
-    this.editMode = false;
-    this.stillInEditMode = '';
-    
+      this.total = this.budgetService.getTotals(this.items);
+      this.items.filter((x, i) => {
+        if(x.id === item.id){
+          this.items.splice(i, 1);
+        }
+      });
+      this.budgetService.updateItem(editedItem).subscribe(res => {
+          this.budgetService.budgetItems.next([...this.items, res])
+          item.editMode = false;
+        }
+      );
+      this.editMode = false;
+      this.stillInEditMode = '';
+    }
+
+
   }
 
   onRemove(item: BudgetItem) {
@@ -103,7 +115,8 @@ export class BudgetPlannerComponent implements OnInit {
       if (item.id === x.id) {
         this.items.splice(i, 1);
       }
-    })
+    });
+    this.total = this.budgetService.getTotals(this.items);
   }
 
 }

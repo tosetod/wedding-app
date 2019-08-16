@@ -20,17 +20,17 @@ export class UserService {
   createUser(user: User){
     this.firestore.collection('users').add(user);
   }
-  
+
   getUser(){
     const userEmail = firebase.auth().currentUser.email;
     const userRef = firebase.firestore().collection('users');
     const query = userRef.where('email', '==', userEmail);
-    query.get({source: 'server'}).then(querySnapshot => {
-              querySnapshot.docs.map(doc => {
-                const user = doc.data() as User;
-                this.user.next(user);
-              })
-          });
+      query.get({source: 'server'}).then(querySnapshot => {
+                querySnapshot.docs.map(doc => {
+                  const user = doc.data() as User;
+                  this.user.next(user);
+                })
+            });
   }
-  
+
 }
