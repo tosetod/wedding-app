@@ -10,13 +10,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class VendorService {
 
-  url = 'http://localhost:8080/restaurants';
+  url = 'http://localhost:49947/restaurants';
 
   constructor(private firestore: AngularFirestore, private http: HttpClient) { }
 
   createRestaurant(restaurant: Restaurant){
 
-    return this.http.post<Restaurant>(this.url + '/new', restaurant);
+    return this.http.post<Restaurant>(this.url, restaurant);
   }
 
   getRestaurantsValueChanges(){

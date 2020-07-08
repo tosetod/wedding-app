@@ -3,8 +3,11 @@ export interface User {
      firstName: string;
      lastName?: string;
      email: string;
+     password: string;
+     confirmPassword: string;
      age?: number
-     wedDate?: Date;
+     weddingDate?: Date;
      partnerName?: string;
      partnerAge?: number;
+     token?: string;
 }

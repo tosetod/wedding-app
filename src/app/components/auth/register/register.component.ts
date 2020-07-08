@@ -27,8 +27,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const password = form.value.password;
     const confirmPassword = form.value.confirmPassword;
     const user = {
-      id: this.userService.generateId(),
+      //id: this.userService.generateId(),
       email: form.value.email,
+      password: form.value.password,
+      confirmPassword: form.value.confirmPassword,
       firstName: form.value.firstName,
       lastName: form.value.lastName,
       age: form.value.age,
@@ -37,12 +39,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       partAge: form.value.partnerAge
     }
     if (password === confirmPassword) {
-      if (this.authService.registerUser(email, password)) {
-        this.userService.createUser(user);
-        form.reset();
-      }
+      this.authService.registerUser(user)
+      form.reset();
     }
   }
+
 
   ngOnDestroy(){
     this.subscription.unsubscribe();

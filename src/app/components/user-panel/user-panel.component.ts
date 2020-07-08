@@ -28,7 +28,7 @@ export class UserPanelComponent implements OnInit,AfterContentInit, OnDestroy {
     this.subscription = this.userService.user.subscribe(
       user => this.user = user
     );
-    const date: number  = new Date(this.user.wedDate).getMilliseconds()
+    const date: number  = new Date(this.user.weddingDate).getMilliseconds()
     console.log(date);
   }
 

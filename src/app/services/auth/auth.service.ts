@@ -2,69 +2,55 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { User } from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  token: string;
+  token = new Subject<string>();
   errMessage = new Subject<string>();
   emailSent: boolean;
 
-  constructor(private router: Router){  }
+  constructor(private router: Router, private http: HttpClient){  }
 
-  registerUser(email: string, password: string): boolean{
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        res.user.sendEmailVerification()
-        .then(() => {
-            this.emailSent = true;
-            return true;
-        })
-        .catch(err => {
-          this.errMessage.next(err);
-        });
-      })
-      .catch(err => {
-        this.errMessage.next(err);
-        return false;
-      });
-      return true;
+  registerUser(user: User){
+    this.http.post<User>("http://localhost:49947/users/register", user).subscribe(
+      () => {
+        this.router.navigateByUrl('/signin');
+      }
+    );
   }
   
   signinUser(email: string, password: string){
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(
-        res => {
-          if(res.user.emailVerified){
-            this.router.navigate(['panel']);
-            firebase.auth().currentUser.getIdToken()
-              .then(
-                (token: string) => this.token = token
-              )
-          }
-        })
-      .catch(error => {
-        this.errMessage.next(error);
-      });
+    return this.http.post("http://localhost:49947/users/signin", {
+        email: email,
+        password: password
+      }).subscribe(
+        (user : User) => { 
+          this.token.next(user.token);
+            this.router.navigateByUrl('/panel');
+        }
+    );;
   }
 
 
   logout(){
     firebase.auth().signOut();
-    this.token = null;
+    //AuthService.token = "";
     this.router.navigate(['/']);
   }
 
   getToken() {
-    firebase.auth().currentUser.getIdToken()
-      .then(
-        (token: string) => this.token = token
-      );
-    return this.token;
+    // firebase.auth().currentUser.getIdToken()
+    //   .then(
+    //     (token: string) => AuthService.token = token
+    //   );
+    // return AuthService.token;
   }
 
   isAuthenticated(){
-    return this.token != null;
+    return true;//(AuthService.token != "") || (AuthService.token != null);
   }
 }

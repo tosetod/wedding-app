@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 export class BudgetPlannerService {
 
   budgetItems = new Subject<BudgetItem[]>();
-  budgetPlannerUrl = 'http://localhost:8080/wedding/1/budget-planner';
+  budgetPlannerUrl = 'http://localhost:49947/budget-planner';
   headers = new HttpHeaders({
     headers: ['Content-Type', 'application-json']
   });

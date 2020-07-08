@@ -10,7 +10,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class GuestListService {
 
-  guestsUrl = 'http://localhost:8080/wedding/1/guests';
+  guestsUrl = 'http://localhost:49947/guests';
 
   constructor(private http: HttpClient) {
   }

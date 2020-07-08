@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule  } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS  } from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../routes/app-routing.module';
 import { AngularFireModule } from "@angular/fire";
@@ -23,6 +23,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faRing, faPhone, faDirections, faGlobe, faCalculator, faClipboardList, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
+import { JwtInterceptor } from './components/interceptors/request.interceptor';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -51,7 +52,11 @@ library.add(faRing, faPhone, faFacebookSquare, faDirections, faGlobe, faCalculat
     FormsModule,
     AngularFirestoreModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
